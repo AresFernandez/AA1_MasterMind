@@ -7,27 +7,9 @@
 
 import SwiftUI
 
-struct row{
-    let number: Int
-    let color: [Color]
-}
-
 struct ContentView: View {
     
-    var RowList: [row] = [
-        row(number: 1, color: [.gray,.gray,.gray,.gray]),
-        row(number: 2, color: [.gray,.yellow,.gray,.gray]),
-        row(number: 3, color: [.gray,.gray,.gray,.gray]),
-        row(number: 4, color: [.gray,.gray,.blue,.gray]),
-        row(number: 5, color: [.gray,.gray,.gray,.gray]),
-        row(number: 6, color: [.red,.gray,.gray,.gray]),
-        row(number: 7, color: [.gray,.gray,.gray,.gray]),
-        row(number: 8, color: [.gray,.gray,.gray,.gray]),
-        row(number: 9, color: [.gray,.gray,.gray,.gray]),
-        row(number: 10, color: [.gray,.gray,.gray,.gray]),
-        row(number: 11, color: [.gray,.gray,.gray,.gray]),
-        row(number: 12, color: [.gray,.gray,.gray,.gray]),
-    ]
+    @ObservedObject var viewModel = ViewModel()
     
     var body: some View {
         VStack{
@@ -37,14 +19,20 @@ struct ContentView: View {
                 .padding(5)
                 .background(Color.orange)
             VStack{
-                ForEach(RowList, id: \.number) { row in
+                ForEach(self.viewModel.RowList, id: \.number) { row in
                     RowView(firstColor: row.color[0],
                             secondColor: row.color[1],
                             thirdColor: row.color[2],
-                            fourthColor: row.color[3])
+                            fourthColor: row.color[3],
+                            firstHintColor: row.hints[0],
+                            secondHintColor: row.hints[1],
+                            thirdHintColor: row.hints[2],
+                            fourthHintColor: row.hints[3],
+                            rowNumber: row.number,
+                            viewModel: self.viewModel)
                }
             }
-            Text("Tried 2 times")
+            Button(viewModel.buttonText, action: { self.viewModel.tryGuess() })
                 .font(.title)
                 .foregroundColor(.white)
                 .padding(5)
