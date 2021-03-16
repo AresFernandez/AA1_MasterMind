@@ -42,18 +42,29 @@ class ViewModel: ObservableObject {
         }
     }
     
-    var numberOfTries = 0
+    @Published var numberOfTries = 0
     @Published var buttonText: String = "Try Guess"
     
-    var colorAnswer: [Color] = [Color.blue,Color.blue,Color.blue,Color.blue]
+    lazy var colorAnswer: [Color] = randomizeAnswer()
     
     public func tryGuess() {
         
-        refreshHints()
+        if self.buttonText == "You Win! Play Again?" || self.buttonText == "You Lose! Play Again?" {
+            resetGame()
+            self.buttonText = "Try Guess"
+            return
+        }
+        
+        if(!checkCorrectInput(colors: RowList[numberOfTries].color)){
+            self.buttonText = "Invalid Code"
+            return
+        }
+        
+        
+        refreshHints(colors: RowList[numberOfTries].color)
         
         if checkWin(colors: RowList[numberOfTries].color) {
-            self.buttonText = "You Win"
-            numberOfTries = 0
+            self.buttonText = "You Win! Play Again?"
         }
         else {
             if(numberOfTries < 11) {
@@ -61,11 +72,40 @@ class ViewModel: ObservableObject {
                 numberOfTries+=1
             }
             else{
-                self.buttonText = "You Lose"
+                self.buttonText = "You Lose! Play Again?"
                 numberOfTries = 0
             }
         }
 
+    }
+    
+    func randomizeAnswer() -> [Color]{
+        var newColorAnswer: [Color] = [Color.blue,Color.red,Color.blue,Color.red]
+        for i in 0...3 {
+            let colorInt : Int = Int.random(in: 0..<4)
+            switch colorInt {
+            case 0:
+                newColorAnswer[i] = Color.red
+            case 1:
+                newColorAnswer[i] = Color.green
+            case 2:
+                newColorAnswer[i] = Color.blue
+            case 3:
+                newColorAnswer[i] = Color.yellow
+            default:
+                newColorAnswer[i] = Color.red
+            }
+
+        }
+        print(newColorAnswer)
+        return newColorAnswer
+    }
+    
+    func checkCorrectInput(colors: [Color]) -> Bool{
+        if colors[0] != Color.gray && colors[1] != Color.gray && colors[2] != Color.gray && colors[3] != Color.gray {
+            return true
+        }
+        return false
     }
     
     func checkWin(colors: [Color]) -> Bool{
@@ -75,7 +115,67 @@ class ViewModel: ObservableObject {
         return false
     }
     
-    func refreshHints(){
+    func refreshHints(colors: [Color]){
+        var colorsInPosition : Int = 0
+        var colorsInPositionAux : [Int] = [0,0,0,0]
+        for i in 0...3 {
+            if colorAnswer[i] == colors[i] {
+                colorsInPosition += 1
+                colorsInPositionAux[i] = 1
+            }
+        }
+
+        if colorsInPosition > 0 {
+            for i in 0...(colorsInPosition-1) {
+                RowList[numberOfTries].hints[i] = Color.red
+            }
+        }
+        
+        var colorsSwitched : Int = 0
+        var colorsSwitchedAux : [Int] = [0,0,0,0]
+        for i in 0...3 {
+            for j in 0...3 {
+                if colorsInPositionAux[j] == 1  {
+                    break;
+                }
+                if colors[i] == colorAnswer[j] && colorsSwitchedAux[j] == 0 {
+                    colorsSwitched += 1
+                    colorsSwitchedAux[j] = 1
+                }
+            }
+        }
+        
+        if colorsSwitched > 0 {
+            for i in colorsInPosition...(colorsInPosition + colorsSwitched-1) {
+                RowList[numberOfTries].hints[i] = Color.yellow
+            }
+        }
+        
+        
+        for i in 0...3 {
+            if RowList[numberOfTries].hints[i] == Color.gray {
+                RowList[numberOfTries].hints[i] = Color.white
+            }
+        }
+    }
+    
+    func resetGame(){
+        numberOfTries = 0
+        colorAnswer = randomizeAnswer()
+        RowList = [
+            row(number: 0, color: [.gray,.gray,.gray,.gray], hints: [.gray,.gray,.gray,.gray]),
+            row(number: 1, color: [.gray,.gray,.gray,.gray], hints: [.gray,.gray,.gray,.gray]),
+            row(number: 2, color: [.gray,.gray,.gray,.gray], hints: [.gray,.gray,.gray,.gray]),
+            row(number: 3, color: [.gray,.gray,.gray,.gray], hints: [.gray,.gray,.gray,.gray]),
+            row(number: 4, color: [.gray,.gray,.gray,.gray], hints: [.gray,.gray,.gray,.gray]),
+            row(number: 5, color: [.gray,.gray,.gray,.gray], hints: [.gray,.gray,.gray,.gray]),
+            row(number: 6, color: [.gray,.gray,.gray,.gray], hints: [.gray,.gray,.gray,.gray]),
+            row(number: 7, color: [.gray,.gray,.gray,.gray], hints: [.gray,.gray,.gray,.gray]),
+            row(number: 8, color: [.gray,.gray,.gray,.gray], hints: [.gray,.gray,.gray,.gray]),
+            row(number: 9, color: [.gray,.gray,.gray,.gray], hints: [.gray,.gray,.gray,.gray]),
+            row(number: 10, color: [.gray,.gray,.gray,.gray], hints: [.gray,.gray,.gray,.gray]),
+            row(number: 11, color: [.gray,.gray,.gray,.gray], hints: [.gray,.gray,.gray,.gray]),
+        ]
     }
     
 }

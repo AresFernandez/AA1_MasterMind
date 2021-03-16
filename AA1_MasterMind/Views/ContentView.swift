@@ -17,7 +17,7 @@ struct ContentView: View {
                 .font(.title)
                 .foregroundColor(.white)
                 .padding(5)
-                .background(Color.orange)
+                .background(Color.red)
             VStack{
                 ForEach(self.viewModel.RowList, id: \.number) { row in
                     RowView(firstColor: row.color[0],
@@ -32,11 +32,20 @@ struct ContentView: View {
                             viewModel: self.viewModel)
                }
             }
-            Button(viewModel.buttonText, action: { self.viewModel.tryGuess() })
-                .font(.title)
-                .foregroundColor(.white)
-                .padding(5)
-                .background(Color.orange)
+            HStack{
+                Button(viewModel.buttonText, action: { self.viewModel.tryGuess() })
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .padding(10)
+                    .background(Color.orange)
+                    .cornerRadius(30)
+                Text("Try: " + String(viewModel.numberOfTries + 1))
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .padding(5)
+                    .background(Color.red)
+            }
+
         }
     }
 }
