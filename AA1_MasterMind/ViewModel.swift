@@ -135,12 +135,10 @@ class ViewModel: ObservableObject {
         var colorsSwitchedAux : [Int] = [0,0,0,0]
         for i in 0...3 {
             for j in 0...3 {
-                if colorsInPositionAux[j] == 1  {
-                    break;
-                }
-                if colors[i] == colorAnswer[j] && colorsSwitchedAux[j] == 0 {
+                if colorsInPositionAux[j] == 0 && colors[i] == colorAnswer[j] && colorsSwitchedAux[j] == 0 {
                     colorsSwitched += 1
                     colorsSwitchedAux[j] = 1
+                    break;
                 }
             }
         }
