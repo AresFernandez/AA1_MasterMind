@@ -97,7 +97,6 @@ class ViewModel: ObservableObject {
             }
 
         }
-        print(newColorAnswer)
         return newColorAnswer
     }
     
