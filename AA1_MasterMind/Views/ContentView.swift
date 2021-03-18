@@ -12,11 +12,14 @@ struct ContentView: View {
     @ObservedObject var viewModel = ViewModel()
     
     var body: some View {
+        let screenSize = UIScreen.main.bounds
+        let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
         VStack{
             Text("Mastermind")
-                .font(.title)
+                .font(.title2)
                 .foregroundColor(.white)
-                .padding(5)
+                .padding(1)
                 .background(Color.red)
             VStack{
                 ForEach(self.viewModel.RowList, id: \.number) { row in
@@ -30,23 +33,22 @@ struct ContentView: View {
                             fourthHintColor: row.hints[3],
                             rowNumber: row.number,
                             viewModel: self.viewModel)
-               }
+                }
             }
             HStack{
                 Button(viewModel.buttonText, action: { self.viewModel.tryGuess() })
-                    .font(.title)
+                    .font(.title2)
                     .foregroundColor(.white)
-                    .padding(10)
+                    .padding(4)
                     .background(Color.orange)
                     .cornerRadius(30)
                 Text("Try: " + String(viewModel.numberOfTries + 1))
-                    .font(.title)
+                    .font(.title2)
                     .foregroundColor(.white)
-                    .padding(5)
+                    .padding(2)
                     .background(Color.red)
             }
-
-        }
+        }.frame(width: screenWidth, height: screenHeight, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
     }
 }
 

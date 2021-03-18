@@ -19,9 +19,9 @@ struct RowView: View {
     var fourthHintColor: Color
     
     var rowNumber: Int
-    
-    private let width: CGFloat = 40.0
-    private let height: CGFloat = 40.0
+
+    private let width: CGFloat = 30.0
+    private let height: CGFloat = 30.0
     
     var viewModel: ViewModel
     
@@ -55,21 +55,21 @@ struct RowView: View {
                     Circle()
                         .fill(firstHintColor)
                         .frame(width: self.width/4, height: self.height/4)
-                        .padding(5)
+                        .padding(2)
                     Circle()
                         .fill(secondHintColor)
                         .frame(width: self.width/4, height: self.height/4)
-                        .padding(5)
+                        .padding(2)
                 }
                 HStack{
                     Circle()
                         .fill(thirdHintColor)
                         .frame(width: self.width/4, height: self.height/4)
-                        .padding(5)
+                        .padding(2)
                     Circle()
                         .fill(fourthHintColor)
                         .frame(width: self.width/4, height: self.height/4)
-                        .padding(5)
+                        .padding(2)
                 }
             }
         }
