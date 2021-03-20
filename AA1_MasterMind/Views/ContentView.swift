@@ -16,7 +16,7 @@ struct ContentView: View {
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
         VStack{
-            Text("Mastermind")
+            Text("MasterMind")
                 .font(.title2)
                 .foregroundColor(.white)
                 .padding(1)
@@ -39,7 +39,7 @@ struct ContentView: View {
                 Button(viewModel.buttonText, action: { self.viewModel.tryGuess() })
                     .font(.title2)
                     .foregroundColor(.white)
-                    .padding(4)
+                    .padding(3)
                     .background(Color.orange)
                     .cornerRadius(30)
                 Text("Try: " + String(viewModel.numberOfTries + 1))

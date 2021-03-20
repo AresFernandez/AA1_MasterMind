@@ -19,33 +19,37 @@ struct RowView: View {
     var fourthHintColor: Color
     
     var rowNumber: Int
-
-    private let width: CGFloat = 30.0
-    private let height: CGFloat = 30.0
     
     var viewModel: ViewModel
     
     var body: some View {
+        
+        let screenSize = UIScreen.main.bounds
+        let screenHeight = screenSize.height
+        
+        let width: CGFloat = (screenHeight - 100) / 12 * 0.75
+        let height: CGFloat = (screenHeight - 100) / 12 * 0.75
+        
         HStack{
             Text(String(self.rowNumber + 1))
-                .padding(10)
+                .padding(1)
             Button("  ", action: { viewModel.changeColor(row: rowNumber, number: 0) })
-                .frame(width: self.width, height: self.height, alignment: .center)
+                .frame(width: width, height: height, alignment: .center)
                 .background(firstColor)
                 .cornerRadius(30)
                 .padding(1)
             Button("  ", action: { viewModel.changeColor(row: rowNumber, number: 1) })
-                .frame(width: self.width, height: self.height, alignment: .center)
+                .frame(width: width, height: height, alignment: .center)
                 .background(secondColor)
                 .cornerRadius(30)
                 .padding(1)
             Button("  ", action: { viewModel.changeColor(row: rowNumber, number: 2) })
-                .frame(width: self.width, height: self.height, alignment: .center)
+                .frame(width: width, height: height, alignment: .center)
                 .background(thirdColor)
                 .cornerRadius(30)
                 .padding(1)
             Button("  ", action: { viewModel.changeColor(row: rowNumber, number: 3) })
-                .frame(width: self.width, height: self.height, alignment: .center)
+                .frame(width: width, height: height, alignment: .center)
                 .background(fourthColor)
                 .cornerRadius(30)
                 .padding(1)
@@ -54,21 +58,21 @@ struct RowView: View {
                 HStack{
                     Circle()
                         .fill(firstHintColor)
-                        .frame(width: self.width/4, height: self.height/4)
+                        .frame(width: width/4, height: height/4)
                         .padding(2)
                     Circle()
                         .fill(secondHintColor)
-                        .frame(width: self.width/4, height: self.height/4)
+                        .frame(width: width/4, height: height/4)
                         .padding(2)
                 }
                 HStack{
                     Circle()
                         .fill(thirdHintColor)
-                        .frame(width: self.width/4, height: self.height/4)
+                        .frame(width: width/4, height: height/4)
                         .padding(2)
                     Circle()
                         .fill(fourthHintColor)
-                        .frame(width: self.width/4, height: self.height/4)
+                        .frame(width: width/4, height: height/4)
                         .padding(2)
                 }
             }

@@ -41,14 +41,14 @@ class ViewModel: ObservableObject {
             self.RowList[row].color[number] = Color.gray
         }
     }
-    
+
     @Published var numberOfTries = 0
     @Published var buttonText: String = "Try Guess"
     
     lazy var colorAnswer: [Color] = randomizeAnswer()
     
     public func tryGuess() {
-        
+
         if self.buttonText == "You Win! Play Again?" || self.buttonText == "You Lose! Play Again?" {
             resetGame()
             self.buttonText = "Try Guess"
